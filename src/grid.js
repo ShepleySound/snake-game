@@ -11,6 +11,15 @@ class Grid {
     this.size = size;
     this.gridStore = grid;
   }
+
+  // clear() {
+  //   this.gridStore.forEach((x) => {
+  //     x.forEach((square) => {
+  //       square = 0;
+  //       console.log(square);
+  //     });
+  //   });
+  // }
 }
 
 export default new Grid(50);

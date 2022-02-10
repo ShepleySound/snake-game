@@ -1,7 +1,7 @@
 class GameState {
   constructor(grid, screen) {
     this.snakeSize = 3;
-    this.snakeSpeed = 40;
+    this.snakeSpeed = 50;
     this.movesSinceFood = 0;
     this.pos = [{ x: 1, y: 1 }];
     this.food = [];
@@ -9,6 +9,9 @@ class GameState {
     this.screen = screen;
     this.setGridElement(this.pos[0].x, this.pos[0].y, 1);
     this.isPaused = false;
+    this.score = 0;
+    this.isGameOver = false;
+    this.updatingSpeed = false;
   }
 
   eatFood(pos) {
@@ -16,6 +19,12 @@ class GameState {
     const foodIndex = this.food.indexOf(pos);
     this.food.splice(foodIndex, 1);
     this.movesSinceFood = 0;
+    this.score += 100;
+    this.screen.setScoreText(this.score);
+    if (this.score % 500 === 0) {
+      this.updatingSpeed = true;
+      this.snakeSpeed -= 2;
+    }
   }
 
   isFoodEmpty() {
@@ -40,6 +49,14 @@ class GameState {
   setGridElement(x, y, val) {
     this.grid.gridStore[x][y] = val;
     this.screen.setSquareValue(x, y, val);
+  }
+
+  clearGrid() {
+    for (let x = 1; x <= this.grid.size; x++) {
+      for (let y = 1; y <= this.grid.size; y++) {
+        this.setGridElement(x, y, 0);
+      }
+    }
   }
 
   moveSnake(newPosition) {
@@ -90,6 +107,20 @@ class GameState {
     } else {
       this.generateFood();
     }
+  }
+
+  reset() {
+    this.snakeSize = 3;
+    this.snakeSpeed = 50;
+    this.movesSinceFood = 0;
+    this.pos = [{ x: 1, y: 1 }];
+    this.food = [];
+    this.score = 0;
+    this.screen.setScoreText(this.score);
+    this.isPaused = false;
+    this.isGameOver = false;
+    this.setGridElement(this.pos[0].x, this.pos[0].y, 1);
+    this.clearGrid();
   }
 }
 

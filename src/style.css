@@ -1,21 +1,54 @@
+@font-face {
+  font-family: 'PressStart';
+  src: url('./assets/fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-style: normal;
+}
+
+html {
+  height: 100vh;
+}
+
 body {
+  font-family: 'PressStart';
   background-color: #121212;
   color: #eeeeee;
   text-align: center;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  display: grid;
   align-items: center;
+  justify-items: center;
+  grid-template: 75px 50px 1fr / 1fr;
+  grid-template-areas:
+    'title'
+    'score'
+    'gs';
+}
+
+h1 {
+  letter-spacing: 1.2rem;
+  color: #cccccc;
+  grid-area: title;
+}
+
+.score {
+  grid-area: score;
+  color: #cccccc;
+  font-size: 1.1rem;
 }
 
 .game-screen {
   display: grid;
   border: 1px solid #aaaaaa;
-  width: 750px;
-  height: 750px;
+  grid-area: gs;
+  height: 80vmin;
+  width: 80vmin;
+  align-self: start;
 }
 
 .square {
-  border: 1px solid #48484820;
+  border: 1px solid #48484810;
+  /* transition: background-color 100ms; */
 }
 
 .square.active {
@@ -23,15 +56,29 @@ body {
 }
 
 .square[data-val='1'] {
-  background-color: #b88686;
-  border-color: #b88686;
+  background-color: #6c7ba3;
+  border-color: #b9d3d6;
+  transition: none;
 }
 
 .square[data-val='2'] {
-  background-color: #bea4a4;
-  border-color: #cfb1b1;
+  background-color: #79a1a0;
+  border-color: #c9dada;
+  transition: none;
 }
 
 .square[data-val='4'] {
-  background-color: #cccccc;
+  background-color: #da6d3b;
+}
+
+.game-paused,
+.game-over {
+  font-size: 2rem;
+  background-color: #00000088;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  display: none;
 }

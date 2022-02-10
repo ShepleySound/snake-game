@@ -97,11 +97,13 @@ window.addEventListener('keydown', (e) => {
       if (!gameState.isPaused) {
         gameState.isPaused = true;
         controller.pause();
-        document.querySelector('.game-paused').style.display = 'flex';
+        document.querySelector('.overlay').style.display = 'flex';
+        document.querySelector('.overlay-head').innerText = 'PAUSED';
       } else {
         gameState.isPaused = false;
         controller.start();
-        document.querySelector('.game-paused').style.display = 'none';
+        document.querySelector('.overlay').style.display = 'none';
+        document.querySelector('.overlay-head').innerText = '';
       }
     }
   }

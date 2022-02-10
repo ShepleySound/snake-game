@@ -71,8 +71,7 @@ h1 {
   background-color: #da6d3b;
 }
 
-.game-paused,
-.game-over {
+.overlay {
   font-size: 2rem;
   background-color: #00000088;
   position: absolute;
@@ -80,5 +79,34 @@ h1 {
   width: 100vw;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   display: none;
 }
+
+.overlay-head,
+.overlay-hiscore {
+  margin: 24px;
+}
+
+.entername-prompt,
+.entername-input {
+  font-family: 'PressStart';
+  font-size: 2rem;
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  width: 60%;
+}
+
+.hiscore-container {
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: end;
+}
+/* 
+.hiscore-score {
+  width: min-content;
+} */

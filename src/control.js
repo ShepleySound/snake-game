@@ -82,18 +82,40 @@ class Control {
 
   gameOver() {
     this.stop();
-    document.querySelector('.game-over').style.display = 'flex';
+
     const triggerReset = (e) => {
       if (e.code === 'Space') {
         move.setDesired('right');
-        document.querySelector('.game-over').style.display = 'none';
+        document.querySelector('.overlay').style.display = 'none';
+        document.querySelector('.overlay-head').innerText = '';
         this.gameState.reset();
         this.start();
         window.removeEventListener('keydown', triggerReset);
       }
     };
 
-    window.addEventListener('keydown', triggerReset);
+    const submitName = (e) => {
+      if (e.code === 'Enter') {
+        this.gameState.currentName =
+          document.querySelector('.entername-input').value;
+        window.removeEventListener('keydown', submitName);
+        document.querySelector('.entername-container').style.display = 'none';
+        gameOverOverlay();
+      }
+    };
+    const gameOverOverlay = () => {
+      document.querySelector('.overlay').style.display = 'flex';
+      document.querySelector('.overlay-head').innerText = 'GAME OVER';
+      window.addEventListener('keydown', triggerReset);
+    };
+
+    if (this.gameState.currentName !== '') {
+      gameOverOverlay();
+    }
+    if (this.gameState.currentName === '') {
+      document.querySelector('.entername-container').style.display = 'flex';
+      window.addEventListener('keydown', submitName);
+    }
   }
 }
 

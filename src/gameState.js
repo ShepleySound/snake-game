@@ -12,6 +12,7 @@ class GameState {
     this.score = 0;
     this.isGameOver = false;
     this.updatingSpeed = false;
+    this.currentName = '';
   }
 
   eatFood(pos) {

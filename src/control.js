@@ -121,10 +121,8 @@ class Control {
 
   dpadListener() {
     const dpad = document.querySelectorAll('.dpad-button');
-    console.log(dpad);
     dpad.forEach((direction) => {
       direction.addEventListener('click', () => {
-        console.log(direction.value);
         if (!this.gameState.isPaused) {
           const pos = {
             x: this.gameState.pos[0].x,

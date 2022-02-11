@@ -119,40 +119,44 @@ class Control {
     });
   }
 
+  handleDpad(e) {
+    const direction = e.target;
+    e.preventDefault();
+    if (!this.gameState.isPaused) {
+      const pos = {
+        x: this.gameState.pos[0].x,
+        y: this.gameState.pos[0].y,
+      };
+      if (move.getDirection() !== UP && move.getDirection() !== DOWN) {
+        if (direction.dataset.value === UP) {
+          move.up(pos);
+          move.setDesired(UP);
+        }
+
+        if (direction.dataset.value === DOWN) {
+          move.down(pos);
+          move.setDesired(DOWN);
+        }
+      }
+
+      if (move.getDirection() !== LEFT && move.getDirection() !== RIGHT) {
+        if (direction.dataset.value === LEFT) {
+          move.left(pos);
+          move.setDesired(LEFT);
+        }
+
+        if (direction.dataset.value === RIGHT) {
+          move.right(pos);
+          move.setDesired(RIGHT);
+        }
+      }
+    }
+  }
   dpadListener() {
     const dpad = document.querySelectorAll('.dpad-button');
     dpad.forEach((direction) => {
-      direction.addEventListener('click', () => {
-        if (!this.gameState.isPaused) {
-          const pos = {
-            x: this.gameState.pos[0].x,
-            y: this.gameState.pos[0].y,
-          };
-          if (move.getDirection() !== UP && move.getDirection() !== DOWN) {
-            if (direction.dataset.value === UP) {
-              move.up(pos);
-              move.setDesired(UP);
-            }
-
-            if (direction.dataset.value === DOWN) {
-              move.down(pos);
-              move.setDesired(DOWN);
-            }
-          }
-
-          if (move.getDirection() !== LEFT && move.getDirection() !== RIGHT) {
-            if (direction.dataset.value === LEFT) {
-              move.left(pos);
-              move.setDesired(LEFT);
-            }
-
-            if (direction.dataset.value === RIGHT) {
-              move.right(pos);
-              move.setDesired(RIGHT);
-            }
-          }
-        }
-      });
+      direction.addEventListener('touchstart', this.handleDpad.bind(this));
+      direction.addEventListener('click', this.handleDpad.bind(this));
     });
   }
 

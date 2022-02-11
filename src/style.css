@@ -99,6 +99,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
 }
 
 .dpad-button:hover {
@@ -111,6 +112,7 @@ h1 {
 
 .dpad-arrow {
   opacity: 20%;
+  pointer-events: none;
 }
 
 .dpad-up {

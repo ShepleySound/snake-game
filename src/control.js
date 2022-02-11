@@ -129,24 +129,24 @@ class Control {
             y: this.gameState.pos[0].y,
           };
           if (move.getDirection() !== UP && move.getDirection() !== DOWN) {
-            if (direction.value === UP) {
+            if (direction.dataset.value === UP) {
               move.up(pos);
               move.setDesired(UP);
             }
 
-            if (direction.value === DOWN) {
+            if (direction.dataset.value === DOWN) {
               move.down(pos);
               move.setDesired(DOWN);
             }
           }
 
           if (move.getDirection() !== LEFT && move.getDirection() !== RIGHT) {
-            if (direction.value === LEFT) {
+            if (direction.dataset.value === LEFT) {
               move.left(pos);
               move.setDesired(LEFT);
             }
 
-            if (direction.value === RIGHT) {
+            if (direction.dataset.value === RIGHT) {
               move.right(pos);
               move.setDesired(RIGHT);
             }

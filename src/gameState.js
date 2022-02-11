@@ -9,10 +9,11 @@ class GameState {
     this.screen = screen;
     this.setGridElement(this.pos[0].x, this.pos[0].y, 1);
     this.isPaused = false;
-    this.score = 0;
+    this.score = 500;
     this.isGameOver = false;
     this.updatingSpeed = false;
     this.currentName = '';
+    this.screen.setScoreText(this.score);
   }
 
   eatFood(pos) {

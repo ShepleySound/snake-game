@@ -1,14 +1,22 @@
 import move from './movement';
 import scoreBoard from './scoreboard';
-import { UP, DOWN, LEFT, RIGHT, SPACE } from './constants';
+import { UP, DOWN, LEFT, RIGHT, SPACE, ENTER } from './constants';
 class Control {
   constructor(gameState, interval) {
     this.gameState = gameState;
     this.interval = interval;
     this.state = 0; // 0: idle, 1: running, 2: paused, 3: resumed
+    this.enteringName = false;
     this.start();
     this.keydownListener();
     this.dpadListener();
+
+    document
+      .querySelector('#resume')
+      .addEventListener('click', this.gameResume.bind(this));
+    document
+      .querySelector('#restart')
+      .addEventListener('click', this.gameReset.bind(this));
   }
   // Start the timer that controls snake movement and food spawn
   start() {
@@ -152,6 +160,7 @@ class Control {
       }
     }
   }
+
   dpadListener() {
     const dpad = document.querySelectorAll('.dpad-button');
     dpad.forEach((direction) => {
@@ -167,6 +176,7 @@ class Control {
       this.gameState.isPaused = true;
       document.querySelector('.overlay').style.display = 'flex';
       document.querySelector('.overlay-head').innerText = 'PAUSED';
+      document.querySelector('#resume').style.display = 'flex';
     }
   }
 
@@ -175,62 +185,74 @@ class Control {
       this.gameState.isPaused = false;
       document.querySelector('.overlay').style.display = 'none';
       document.querySelector('.overlay-head').innerText = '';
+      document.querySelector('#resume').style.display = 'none';
       this.start();
     }
+  }
+
+  gameReset() {
+    move.setDesired(RIGHT);
+    document.querySelector('.overlay').style.display = 'none';
+    document.querySelector('.overlay-head').innerText = '';
+    document.querySelector('#restart').style.display = 'none';
+    this.gameState.reset();
+    this.start();
+  }
+
+  submitName(name) {
+    if (name !== '' && name.length <= 8) {
+      this.gameState.currentName = name;
+      this.enteringName = false;
+
+      if (scoreBoard.hiScoreList.length < 5) {
+        scoreBoard.addScore(this.gameState.currentName, this.gameState.score);
+      } else {
+        scoreBoard.updateScore(
+          this.gameState.currentName,
+          this.gameState.score,
+        );
+      }
+      this.gameState.currentName = '';
+      document.querySelector('.entername-container').style.display = 'none';
+      this.gameOverOverlay();
+    }
+  }
+
+  gameOverOverlay() {
+    scoreBoard.redrawScores();
+    document.querySelector('.overlay').style.display = 'flex';
+    document.querySelector('.overlay-head').innerText = 'GAME OVER';
+    document.querySelector('#restart').style.display = 'flex';
+
+    window.addEventListener('keydown', (e) => {
+      if (e.code === SPACE && this.gameState.isGameOver) {
+        this.gameReset();
+      }
+    });
   }
 
   gameOver() {
     this.stop();
 
-    const triggerReset = (e) => {
-      if (e.code === SPACE) {
-        move.setDesired(RIGHT);
-        document.querySelector('.overlay').style.display = 'none';
-        document.querySelector('.overlay-head').innerText = '';
-        this.gameState.reset();
-        this.start();
-        window.removeEventListener('keydown', triggerReset);
-      }
-    };
+    // const gameOverOverlay = () => {
+    //   scoreBoard.redrawScores();
+    //   document.querySelector('.overlay').style.display = 'flex';
+    //   document.querySelector('.overlay-head').innerText = 'GAME OVER';
+    //   document.querySelector('#restart').style.display = 'flex';
 
-    const submitName = (e) => {
-      const nameInput = document.querySelector('.entername-input');
-      nameInput.focus();
-      this.gameState.currentName = nameInput.value;
-      if (e.code === 'Enter') {
-        if (nameInput.value !== '' && nameInput.value.length <= 8) {
-          if (scoreBoard.hiScoreList.length < 5) {
-            scoreBoard.addScore(
-              this.gameState.currentName,
-              this.gameState.score,
-            );
-          } else {
-            scoreBoard.updateScore(
-              this.gameState.currentName,
-              this.gameState.score,
-            );
-          }
-          nameInput.value = '';
-          this.gameState.currentName = '';
-          window.removeEventListener('keydown', submitName);
-          document.querySelector('.entername-container').style.display = 'none';
-          gameOverOverlay();
-        }
-      }
-    };
-    const gameOverOverlay = () => {
-      scoreBoard.redrawScores();
-      document.querySelector('.overlay').style.display = 'flex';
-      document.querySelector('.overlay-head').innerText = 'GAME OVER';
-      window.addEventListener('keydown', triggerReset);
-    };
+    //   window.addEventListener('keydown', (e) => {
+    //     if (e.code === SPACE && this.gameState.isGameOver) {
+    //       this.gameReset();
+    //     }
+    //   });
+    // };
 
     // If there is already a name input OR if not a high score
     if (
       this.gameState.currentName !== '' ||
       !scoreBoard.isHighScore(this.gameState.score)
     ) {
-      gameOverOverlay();
+      this.gameOverOverlay();
     }
 
     // If name is empty AND if the score is high enough to meet list.
@@ -238,8 +260,19 @@ class Control {
       this.gameState.currentName === '' &&
       scoreBoard.isHighScore(this.gameState.score)
     ) {
+      const nameInput = document.querySelector('.entername-input');
+      nameInput.focus();
       document.querySelector('.entername-container').style.display = 'flex';
-      window.addEventListener('keydown', submitName);
+      this.enteringName = true;
+
+      window.addEventListener('keydown', (e) => {
+        if (e.code === ENTER && this.enteringName) {
+          this.submitName(nameInput.value);
+        }
+      });
+      document.querySelector('#submit-name').addEventListener('click', () => {
+        this.submitName(nameInput.value);
+      });
     }
 
     // If name is already given AND if the score is high enough to meet list.
@@ -255,7 +288,7 @@ class Control {
           this.gameState.score,
         );
       }
-      gameOverOverlay();
+      this.gameOverOverlay();
     }
   }
 }

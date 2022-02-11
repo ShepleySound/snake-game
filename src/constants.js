@@ -11,5 +11,6 @@ const DOWN = 'down';
 const LEFT = 'left';
 const RIGHT = 'right';
 const SPACE = 'Space';
+const ENTER = 'Enter';
 
-export { DEFAULTSCORES, UP, DOWN, LEFT, RIGHT, SPACE };
+export { DEFAULTSCORES, UP, DOWN, LEFT, RIGHT, SPACE, ENTER };

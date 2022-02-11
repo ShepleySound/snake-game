@@ -5,7 +5,7 @@ class ScoreBoard {
   constructor() {
     this.hiscoreElement = document.querySelector('.hiscore-container');
     this.hiScoreList = storage.get('hiscores') || DEFAULTSCORES;
-    document.querySelector('#reset').addEventListener('click', () => {
+    document.querySelector('#reset-scores').addEventListener('click', () => {
       this.hiScoreList = DEFAULTSCORES;
       this.redrawScores();
     });

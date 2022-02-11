@@ -195,6 +195,10 @@ h1 {
   background-color: #282828;
 }
 
+.continue-button {
+  display: none;
+}
+
 .hiscore-name {
   justify-self: start;
 }

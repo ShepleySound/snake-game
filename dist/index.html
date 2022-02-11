@@ -27,13 +27,16 @@
     <div class="hiscore-container">
     </div>
     <div class="options-container">
-      <button id="reset" class="option">Reset scores</button>
+      <button id="restart" class="option continue-button">Restart Game</button>
+      <button id="resume" class="option continue-button">Resume Game</button>
+      <button id="reset-scores" class="option">Reset scores</button>
     </div>
   </div>
   <div class="entername-container overlay">
-  <div class="entername-congrats">New Hi-Score!</div>
-  <div class="entername-prompt">Enter name:</div>
-  <input type="text" name="entername" id="entername" class="entername-input" minlength="1" maxlength="8">
+    <div class="entername-congrats">New Hi-Score!</div>
+    <div class="entername-prompt">Enter name:</div>
+    <input type="text" name="entername" id="entername" class="entername-input" minlength="1" maxlength="8">
+    <button id="submit-name" class="option">Submit</button>
   </div>
 </body>
 </html>

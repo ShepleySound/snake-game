@@ -8,6 +8,7 @@ class Control {
     this.state = 0; // 0: idle, 1: running, 2: paused, 3: resumed
     this.start();
     this.keydownListener();
+    this.dpadListener();
   }
   // Start the timer that controls snake movement and food spawn
   start() {
@@ -115,6 +116,44 @@ class Control {
           this.gameResume();
         }
       }
+    });
+  }
+
+  dpadListener() {
+    const dpad = document.querySelectorAll('.dpad *');
+    dpad.forEach((direction) => {
+      direction.addEventListener('click', () => {
+        console.log(direction.value);
+        if (!this.gameState.isPaused) {
+          const pos = {
+            x: this.gameState.pos[0].x,
+            y: this.gameState.pos[0].y,
+          };
+          if (move.getDirection() !== UP && move.getDirection() !== DOWN) {
+            if (direction.value === UP) {
+              move.up(pos);
+              move.setDesired(UP);
+            }
+
+            if (direction.value === DOWN) {
+              move.down(pos);
+              move.setDesired(DOWN);
+            }
+          }
+
+          if (move.getDirection() !== LEFT && move.getDirection() !== RIGHT) {
+            if (direction.value === LEFT) {
+              move.left(pos);
+              move.setDesired(LEFT);
+            }
+
+            if (direction.value === RIGHT) {
+              move.right(pos);
+              move.setDesired(RIGHT);
+            }
+          }
+        }
+      });
     });
   }
 

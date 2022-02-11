@@ -27,15 +27,15 @@ body {
   display: grid;
   align-items: center;
   justify-items: center;
-  grid-template: 75px 50px 1fr / 1fr;
+  grid-template: 75px 50px 65vmin 1fr / 1fr;
   grid-template-areas:
     'title'
     'score'
-    'gs';
+    'gs'
+    'dpad';
 }
 
 h1 {
-  letter-spacing: 1.2rem;
   color: #cccccc;
   grid-area: title;
 }
@@ -50,8 +50,8 @@ h1 {
   display: grid;
   border: 1px solid #aaaaaa;
   grid-area: gs;
-  height: 80vmin;
-  width: 80vmin;
+  height: 65vmin;
+  width: 65vmin;
   align-self: start;
 }
 
@@ -78,6 +78,49 @@ h1 {
 
 .square[data-val='4'] {
   background-color: #da6d3b;
+}
+
+.dpad {
+  grid-area: dpad;
+  width: 20vmin;
+  height: 20vmin;
+  display: grid;
+  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+  grid-template-areas:
+    '. up .'
+    'left . right'
+    '. down .';
+  align-self: start;
+  padding: 12px;
+}
+
+.dpad * {
+  background-color: #282828;
+  border: none;
+}
+
+.dpad *:hover {
+  background-color: #303030;
+}
+
+.dpad *:active {
+  box-shadow: inset 0px 0px 6px #646464;
+}
+
+.dpad-up {
+  grid-area: up;
+}
+
+.dpad-down {
+  grid-area: down;
+}
+
+.dpad-left {
+  grid-area: left;
+}
+
+.dpad-right {
+  grid-area: right;
 }
 
 .overlay {
@@ -146,6 +189,22 @@ h1 {
 
 .hiscore-name {
   justify-self: start;
+}
+
+@media (orientation: landscape) {
+  body {
+    grid-template: 75px 50px 80vmin / 1fr 1fr 1fr;
+    grid-template-areas:
+      'title title title'
+      'score score score'
+      '. gs dpad';
+  }
+
+  .game-screen,
+  .dpad {
+    align-self: center;
+    justify-self: center;
+  }
 }
 /* 
 .hiscore-score {

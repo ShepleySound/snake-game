@@ -1,7 +1,7 @@
 class GameState {
   constructor(grid, screen) {
     this.snakeSize = 3;
-    this.snakeSpeed = 50;
+    this.snakeSpeed = 500;
     this.movesSinceFood = 0;
     this.pos = [{ x: 1, y: 1 }];
     this.food = [];

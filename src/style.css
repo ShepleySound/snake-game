@@ -27,7 +27,7 @@ body {
   display: grid;
   align-items: center;
   justify-items: center;
-  grid-template: 75px 50px 65vmin 1fr / 1fr;
+  grid-template: 75px 50px 1fr / 1fr;
   grid-template-areas:
     'title'
     'score'
@@ -49,8 +49,8 @@ h1 {
   display: grid;
   border: 1px solid #aaaaaa;
   grid-area: gs;
-  height: 65vmin;
-  width: 65vmin;
+  height: 80vmin;
+  width: 80vmin;
   align-self: start;
   position: relative;
 }
@@ -194,13 +194,23 @@ h1 {
   justify-self: start;
 }
 
-@media (orientation: landscape) {
+@media (orientation: portrait) {
   body {
-    grid-template: 75px 50px 80vmin / 1fr 1fr 1fr;
+    grid-template: 50px 25px 1fr / 1fr;
     grid-template-areas:
-      'title title title'
-      'score score score'
-      '. gs dpad';
+      'title'
+      'score'
+      'gs';
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  .score {
+    font-size: 0.8rem;
+  }
+  .game-screen {
+    height: 92vmin;
+    width: 92vmin;
   }
 }
 /* 

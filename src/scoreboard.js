@@ -8,7 +8,6 @@ class ScoreBoard {
     document.querySelector('#reset').addEventListener('click', () => {
       this.hiScoreList = DEFAULTSCORES;
       this.redrawScores();
-      console.log(localStorage);
     });
   }
 

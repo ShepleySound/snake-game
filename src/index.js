@@ -21,7 +21,7 @@ const addArrow = (arrowAsset) => {
 };
 
 dpadElements.forEach((element) => {
-  switch (element.value) {
+  switch (element.dataset.value) {
     case UP:
       element.append(addArrow(upArrow));
       break;

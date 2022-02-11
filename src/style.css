@@ -96,6 +96,9 @@ h1 {
 .dpad-button {
   background-color: #ffffff0a;
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dpad-button:hover {
@@ -107,7 +110,7 @@ h1 {
 }
 
 .dpad-arrow {
-  opacity: 9%;
+  opacity: 20%;
 }
 
 .dpad-up {

@@ -1,20 +1,22 @@
 import move from './movement';
+import scoreBoard from './scoreboard';
+import { UP, DOWN, LEFT, RIGHT, SPACE } from './constants';
 class Control {
   constructor(gameState, interval) {
     this.gameState = gameState;
     this.interval = interval;
     this.state = 0; // 0: idle, 1: running, 2: paused, 3: resumed
+    this.start();
+    this.keydownListener();
   }
-
+  // Start the timer that controls snake movement and food spawn
   start() {
-    console.log('Starting timer');
     this.timerId = window.setInterval(() => {
       this.moveSnake();
     }, this.gameState.snakeSpeed);
     this.state = 1;
-    console.log(this.gameState.snakeSpeed);
   }
-
+  // Clear the timer so that a new interval can be set
   updateSpeed() {
     clearInterval(this.timerId);
     this.timerId = window.setInterval(() => {
@@ -22,18 +24,15 @@ class Control {
     }, this.gameState.snakeSpeed);
     this.gameState.updatingSpeed = false;
   }
-
+  //
   pause() {
-    console.log(this.gameState);
     if (this.state != 1 && this.state != 3) return;
 
-    console.log('Pausing timer');
     clearInterval(this.timerId);
     this.state = 2;
   }
 
   stop() {
-    console.log('Stopping timer!!!');
     clearInterval(this.timerId);
     this.state = 0;
   }
@@ -43,16 +42,16 @@ class Control {
     const pos = { x: this.gameState.pos[0].x, y: this.gameState.pos[0].y };
     if (!this.gameState.isPaused) {
       switch (move.getDirection()) {
-        case 'up':
+        case UP:
           move.up(pos);
           break;
-        case 'down':
+        case DOWN:
           move.down(pos);
           break;
-        case 'left':
+        case LEFT:
           move.left(pos);
           break;
-        case 'right':
+        case RIGHT:
           move.right(pos);
           break;
         default:
@@ -80,12 +79,70 @@ class Control {
     }
   }
 
+  keydownListener() {
+    window.addEventListener('keydown', (e) => {
+      if (!this.gameState.isPaused) {
+        const pos = { x: this.gameState.pos[0].x, y: this.gameState.pos[0].y };
+        if (move.getDirection() !== UP && move.getDirection() !== DOWN) {
+          if (e.code === 'ArrowUp') {
+            move.up(pos);
+            move.setDesired(UP);
+          }
+
+          if (e.code === 'ArrowDown') {
+            move.down(pos);
+            move.setDesired(DOWN);
+          }
+        }
+
+        if (move.getDirection() !== LEFT && move.getDirection() !== RIGHT) {
+          if (e.code === 'ArrowLeft') {
+            move.left(pos);
+            move.setDesired(LEFT);
+          }
+
+          if (e.code === 'ArrowRight') {
+            move.right(pos);
+            move.setDesired(RIGHT);
+          }
+        }
+      }
+
+      if (e.code === SPACE) {
+        if (!this.gameState.isGameOver && !this.gameState.isPaused) {
+          this.gamePause();
+        } else {
+          this.gameResume();
+        }
+      }
+    });
+  }
+
+  gamePause() {
+    if (this.state !== 2 && this.state !== 0) {
+      this.pause();
+      scoreBoard.redrawScores();
+      this.gameState.isPaused = true;
+      document.querySelector('.overlay').style.display = 'flex';
+      document.querySelector('.overlay-head').innerText = 'PAUSED';
+    }
+  }
+
+  gameResume() {
+    if (this.state === 2) {
+      this.gameState.isPaused = false;
+      document.querySelector('.overlay').style.display = 'none';
+      document.querySelector('.overlay-head').innerText = '';
+      this.start();
+    }
+  }
+
   gameOver() {
     this.stop();
 
     const triggerReset = (e) => {
-      if (e.code === 'Space') {
-        move.setDesired('right');
+      if (e.code === SPACE) {
+        move.setDesired(RIGHT);
         document.querySelector('.overlay').style.display = 'none';
         document.querySelector('.overlay-head').innerText = '';
         this.gameState.reset();
@@ -95,26 +152,68 @@ class Control {
     };
 
     const submitName = (e) => {
+      const nameInput = document.querySelector('.entername-input');
+      nameInput.focus();
+      this.gameState.currentName = nameInput.value;
       if (e.code === 'Enter') {
-        this.gameState.currentName =
-          document.querySelector('.entername-input').value;
-        window.removeEventListener('keydown', submitName);
-        document.querySelector('.entername-container').style.display = 'none';
-        gameOverOverlay();
+        if (nameInput.value !== '' && nameInput.value.length <= 8) {
+          if (scoreBoard.hiScoreList.length < 5) {
+            scoreBoard.addScore(
+              this.gameState.currentName,
+              this.gameState.score,
+            );
+          } else {
+            scoreBoard.updateScore(
+              this.gameState.currentName,
+              this.gameState.score,
+            );
+          }
+          nameInput.value = '';
+          this.gameState.currentName = '';
+          window.removeEventListener('keydown', submitName);
+          document.querySelector('.entername-container').style.display = 'none';
+          gameOverOverlay();
+        }
       }
     };
     const gameOverOverlay = () => {
+      scoreBoard.redrawScores();
       document.querySelector('.overlay').style.display = 'flex';
       document.querySelector('.overlay-head').innerText = 'GAME OVER';
       window.addEventListener('keydown', triggerReset);
     };
 
-    if (this.gameState.currentName !== '') {
+    // If there is already a name input OR if not a high score
+    if (
+      this.gameState.currentName !== '' ||
+      !scoreBoard.isHighScore(this.gameState.score)
+    ) {
       gameOverOverlay();
     }
-    if (this.gameState.currentName === '') {
+
+    // If name is empty AND if the score is high enough to meet list.
+    if (
+      this.gameState.currentName === '' &&
+      scoreBoard.isHighScore(this.gameState.score)
+    ) {
       document.querySelector('.entername-container').style.display = 'flex';
       window.addEventListener('keydown', submitName);
+    }
+
+    // If name is already given AND if the score is high enough to meet list.
+    if (
+      this.gameState.currentName !== '' &&
+      scoreBoard.isHighScore(this.gameState.score)
+    ) {
+      if (scoreBoard.hiScoreList.length < 5) {
+        scoreBoard.addScore(this.gameState.currentName, this.gameState.score);
+      } else {
+        scoreBoard.updateScore(
+          this.gameState.currentName,
+          this.gameState.score,
+        );
+      }
+      gameOverOverlay();
     }
   }
 }

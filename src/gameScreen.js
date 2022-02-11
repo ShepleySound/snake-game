@@ -27,7 +27,6 @@ class GameScreen {
 
   setScoreText(score) {
     this.scoreElement.innerText = score;
-    console.log(score);
     this.screenElement.style.boxShadow = `0px 0px ${score / 100}px #ffffff`;
   }
 }

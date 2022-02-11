@@ -1,3 +1,12 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 @font-face {
   font-family: 'PressStart';
   src: url('./assets/fonts/PressStart2P-Regular.ttf') format('truetype');
@@ -72,7 +81,7 @@ h1 {
 }
 
 .overlay {
-  font-size: 2rem;
+  font-size: calc(1.5rem + 1vw);
   background-color: #00000088;
   position: absolute;
   height: 100vh;
@@ -85,26 +94,58 @@ h1 {
 
 .overlay-head,
 .overlay-hiscore {
-  margin: 24px;
+  margin: 18px;
 }
 
+.entername-congrats,
 .entername-prompt,
 .entername-input {
   font-family: 'PressStart';
-  font-size: 2rem;
+  font-size: calc(1.5rem + 1vw);
+  text-align: center;
+  margin: 12px;
   background-color: transparent;
   color: #ffffff;
   border: none;
   outline: none;
+  width: 80%;
+}
+
+.entername-input {
+  background-color: #242424;
   width: 60%;
+  padding: 12px;
 }
 
 .hiscore-container {
   display: grid;
+  width: clamp(400px, 100%, 600px);
+  gap: 12px;
   grid-auto-rows: 1fr;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   align-items: center;
   justify-items: end;
+  /* background-color: #181818; */
+  padding: 18px;
+}
+
+.option {
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  font-family: 'PressStart';
+  color: #ffffff;
+  padding: 12px;
+  margin-top: 36px;
+  background-color: #242424;
+}
+
+.option:hover {
+  background-color: #282828;
+}
+
+.hiscore-name {
+  justify-self: start;
 }
 /* 
 .hiscore-score {

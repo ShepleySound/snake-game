@@ -120,7 +120,8 @@ class Control {
   }
 
   dpadListener() {
-    const dpad = document.querySelectorAll('.dpad *');
+    const dpad = document.querySelectorAll('.dpad-button');
+    console.log(dpad);
     dpad.forEach((direction) => {
       direction.addEventListener('click', () => {
         console.log(direction.value);

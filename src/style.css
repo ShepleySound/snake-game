@@ -31,8 +31,7 @@ body {
   grid-template-areas:
     'title'
     'score'
-    'gs'
-    'dpad';
+    'gs';
 }
 
 h1 {
@@ -53,6 +52,7 @@ h1 {
   height: 65vmin;
   width: 65vmin;
   align-self: start;
+  position: relative;
 }
 
 .square {
@@ -81,30 +81,33 @@ h1 {
 }
 
 .dpad {
-  grid-area: dpad;
-  width: 20vmin;
-  height: 20vmin;
   display: grid;
-  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  grid-template: 1fr 2fr 1fr / 1fr 1fr;
   grid-template-areas:
-    '. up .'
-    'left . right'
-    '. down .';
-  align-self: start;
-  padding: 12px;
+    'up up'
+    'left right'
+    'down down';
+  gap: 1px;
 }
 
-.dpad * {
-  background-color: #282828;
+.dpad-button {
+  background-color: #ffffff0a;
   border: none;
 }
 
-.dpad *:hover {
-  background-color: #303030;
+.dpad-button:hover {
+  background-color: #ffffff0f;
 }
 
-.dpad *:active {
-  box-shadow: inset 0px 0px 6px #646464;
+.dpad-button:active {
+  box-shadow: inset 0px 0px 6px #ffffff11;
+}
+
+.dpad-arrow {
+  opacity: 8%;
 }
 
 .dpad-up {
@@ -198,12 +201,6 @@ h1 {
       'title title title'
       'score score score'
       '. gs dpad';
-  }
-
-  .game-screen,
-  .dpad {
-    align-self: center;
-    justify-self: center;
   }
 }
 /* 

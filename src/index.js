@@ -1,4 +1,5 @@
 import './style.css';
+import './themes.css';
 import grid from './grid';
 import GameScreen from './gameScreen';
 import GameState from './gameState';

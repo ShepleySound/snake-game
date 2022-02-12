@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="inTheDark">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,14 +35,18 @@
     </div>
   </div>
   <div id="entername-overlay" class="entername-container overlay">
-    <div class="entername-congrats">New Hi-Score!</div>
-    <div class="entername-prompt">Enter name:</div>
+    <div class="overlay-text entername-congrats">New Hi-Score!</div>
+    <div class="overlay-text entername-prompt">Enter name:</div>
     <input type="text" name="entername" id="entername" class="entername-input" minlength="1" maxlength="8">
     <button id="submit-name" class="option">Submit</button>
   </div>
   <div id="settings-overlay" class="overlay">
-    <label class="setting-label" for="backgroundcolor">Background Color</label>
-    <input type="color" name="backgroundcolor" id="backgroundcolor">
+    <label class="overlay-text setting-label" for="themes">Theme</label>
+    <select class="select-input" name="themes" id="themes-list">
+      <option class="select-option" value="darkMode">Dark Mode</option>
+      <option class="select-option" value="crimsonGold">Crimson Gold</option>
+      <option class="select-option" value="inTheDark">In The Dark</option>
+    </select>
     <button id="back" class="option back-button">Back</button>
   </div>
 </body>

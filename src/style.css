@@ -19,8 +19,8 @@ html {
 
 body {
   font-family: 'PressStart';
-  background-color: #121212;
-  color: #eeeeee;
+  background-color: var(--main-background);
+  color: var(--text-color);
   text-align: center;
   height: 100%;
   margin: 0;
@@ -36,49 +36,71 @@ body {
 }
 
 h1 {
-  color: #cccccc;
+  color: var(--text-color);
   grid-area: title;
 }
 
 .score {
   grid-area: score;
-  color: #cccccc;
+  color: var(--text-color);
   font-size: 1.1rem;
 }
 
 .game-screen {
+  background-color: var(--grid-background);
   display: grid;
-  border: 1px solid #aaaaaa;
+  border: 1px solid var(--areaBorder-color);
   grid-area: gs;
   height: 75vmin;
   width: 75vmin;
   align-self: start;
   position: relative;
+  color: var(--shadow-color);
 }
 
 .square {
-  border: 1px solid #48484810;
+  border: 1px solid var(--squareBorder-color);
   /* transition: background-color 100ms; */
 }
 
-.square.active {
-  background-color: #745f3a;
-}
-
 .square[data-val='1'] {
-  background-color: #6c7ba3;
-  border-color: #b9d3d6;
+  background-color: var(--snakeHead-color);
+  border-color: var(--snakeHead-borderColor);
+  box-shadow: var(--snakeHead-glow);
   transition: none;
 }
 
 .square[data-val='2'] {
-  background-color: #79a1a0;
-  border-color: #c9dada;
+  background-color: var(--snakeBody-color);
+  border-color: var(--snakeBody-borderColor);
+  box-shadow: var(--snakeBody-glow);
+
   transition: none;
 }
 
 .square[data-val='4'] {
-  background-color: #da6d3b;
+  background-color: var(--food-color);
+  animation: glow 4s ease-in 0s infinite;
+  /* box-shadow: 0px 0px 2px #ffffff; */
+}
+
+select {
+  background-color: var(--input-color);
+  color: var(--text-color);
+  font-family: 'PressStart';
+  font-size: 1rem;
+  padding: 8px;
+  margin: 12px;
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0px 0px 10px var(--foodGlow-color);
+  }
+  50% {
+    box-shadow: 0px 0px 2px var(--food-color);
+  }
 }
 
 .dpad {
@@ -154,6 +176,11 @@ h1 {
   margin: 18px;
 }
 
+.overlay-text,
+.option {
+  color: var(--text-color);
+}
+
 .entername-congrats,
 .entername-prompt,
 .entername-input {
@@ -162,14 +189,14 @@ h1 {
   text-align: center;
   margin: 12px;
   background-color: transparent;
-  color: #ffffff;
   border: none;
   outline: none;
   width: 80%;
 }
 
 .entername-input {
-  background-color: #242424;
+  background-color: var(--input-color);
+  color: var(--text-color);
   width: 60%;
   padding: 12px;
 }
@@ -194,14 +221,13 @@ h1 {
   border: none;
   font-size: 1rem;
   font-family: 'PressStart';
-  color: #ffffff;
   padding: 12px;
   margin: 36px 12px 36px 12px;
-  background-color: #242424;
+  background-color: var(--button-color);
 }
 
 .option:hover {
-  background-color: #282828;
+  background-color: var(--button-hover);
 }
 
 .option.pause-button {

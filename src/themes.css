@@ -1,0 +1,57 @@
+:root.darkMode {
+  --main-background: #121212;
+  --grid-background: #121212;
+  --areaBorder-color: #aaaaaa;
+  --squareBorder-color: #48484810;
+  --text-color: #cccccc;
+  --button-color: #242424;
+  --button-hover: #282828;
+  --input-color: #242424;
+
+  --snakeHead-color: #6c7ba3;
+  --snakeHead-borderColor: #b9d3d6;
+  --snakeBody-color: #79a1a0;
+  --snakeBody-BorderColor: #c9dada;
+  --food-color: #da6d3b;
+}
+
+:root.crimsonGold {
+  --main-background: #522525;
+  --grid-background: #581f1f;
+  --areaBorder-color: #613535;
+  --shadow-color: #814e4e;
+  --squareBorder-color: #48484810;
+  --text-color: #d6c1b5;
+  --button-color: #9b7021;
+  --button-hover: #aa6627;
+  --input-color: #8f5e47;
+  --snakeHead-color: #dfbf30;
+  --snakeHead-borderColor: #c9b64dc5;
+  --snakeBody-color: #d8b963;
+  --snakeBody-borderColor: #dbaf6ed3;
+  --food-color: #dbab43;
+  --foodGlow-color: #cccccc;
+
+  --snakeHead-glow: none;
+}
+
+:root.inTheDark {
+  --main-background: #000000;
+  --grid-background: #000000;
+  --areaBorder-color: #121212;
+  --shadow-color: #121212;
+  --squareBorder-color: #12121220;
+  --text-color: #aaaaae;
+  --button-color: #121212;
+  --button-hover: #131313;
+  --input-color: #121212;
+  --snakeHead-color: #020202;
+  --snakeHead-borderColor: transparent;
+  --snakeBody-color: #040404;
+  --snakeBody-borderColor: transparent;
+  --food-color: #000000;
+  --foodGlow-color: #cccccc;
+
+  --snakeHead-glow: 0px 0px 3px #cccccc;
+  --snakeBody-glow: 0px 0px 2px #cccccc;
+}

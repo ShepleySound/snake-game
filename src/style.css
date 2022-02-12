@@ -137,12 +137,6 @@ h1 {
   grid-area: right;
 }
 
-.option.pause-button {
-  grid-area: pause;
-  align-self: start;
-  margin-top: 12px;
-}
-
 .overlay {
   font-size: calc(1.5rem + 1vw);
   background-color: #00000088;
@@ -192,19 +186,28 @@ h1 {
   padding: 18px;
 }
 
+.options-container {
+  display: flex;
+}
+
 .option {
-  background-color: transparent;
   border: none;
   font-size: 1rem;
   font-family: 'PressStart';
   color: #ffffff;
   padding: 12px;
-  margin-top: 36px;
+  margin: 36px 12px 36px 12px;
   background-color: #242424;
 }
 
 .option:hover {
   background-color: #282828;
+}
+
+.option.pause-button {
+  grid-area: pause;
+  align-self: start;
+  margin-top: 12px;
 }
 
 .continue-button {

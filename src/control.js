@@ -135,7 +135,7 @@ class Control {
         e.preventDefault;
         if (!this.gameState.isGameOver && !this.gameState.isPaused) {
           this.gamePause();
-        } else {
+        } else if (!this.gameState.inSettings) {
           this.gameResume();
         }
       }
@@ -235,7 +235,11 @@ class Control {
   }
 
   resetListener(event) {
-    if (event.code === SPACE && this.gameState.isGameOver) {
+    if (
+      event.code === SPACE &&
+      this.gameState.isGameOver &&
+      !this.gameState.inSettings
+    ) {
       this.gameReset();
       window.removeEventListener('keydown', this.resetListener);
     }

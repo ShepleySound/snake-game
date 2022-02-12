@@ -14,6 +14,7 @@ class GameState {
     this.updatingSpeed = false;
     this.currentName = '';
     this.screen.setScoreText(this.score);
+    this.inSettings = false;
   }
 
   eatFood(pos) {

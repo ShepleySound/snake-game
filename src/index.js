@@ -3,6 +3,7 @@ import grid from './grid';
 import GameScreen from './gameScreen';
 import GameState from './gameState';
 import Control from './control';
+import Settings from './settings';
 import { UP, DOWN, LEFT, RIGHT } from './constants';
 import upArrow from './assets/svgs/keyboard_arrow_up_white_36dp.svg';
 import downArrow from './assets/svgs/keyboard_arrow_down_white_36dp.svg';
@@ -51,3 +52,4 @@ const gameState = new GameState(grid, gameScreen);
 
 // Initalize controller object
 const controller = new Control(gameState, gameState.snakeSpeed);
+const settings = new Settings(gameState);

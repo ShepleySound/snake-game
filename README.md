@@ -2,7 +2,7 @@
 
 A browser-based spin on the classic game "Snake".
 
-## [Game Link](www.shepleysound.github.io/snake-game)
+## [Game Link](https://www.shepleysound.github.io/snake-game)
 
 ## Features
 - Hi-score saves (localStorage-based)

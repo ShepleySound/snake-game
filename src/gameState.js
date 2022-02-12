@@ -9,7 +9,7 @@ class GameState {
     this.screen = screen;
     this.setGridElement(this.pos[0].x, this.pos[0].y, 1);
     this.isPaused = false;
-    this.score = 500;
+    this.score = 0;
     this.isGameOver = false;
     this.updatingSpeed = false;
     this.currentName = '';

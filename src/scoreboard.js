@@ -6,8 +6,8 @@ class ScoreBoard {
     this.hiscoreElement = document.querySelector('.hiscore-container');
     this.hiScoreList = storage.get('hiscores') || DEFAULTSCORES;
     document.querySelector('#reset-scores').addEventListener('click', () => {
-      this.hiScoreList = DEFAULTSCORES;
-      this.redrawScores();
+      const [...defaultScore] = DEFAULTSCORES;
+      this.setScoreList(defaultScore);
     });
   }
 
@@ -64,6 +64,11 @@ class ScoreBoard {
       this.hiscoreElement.append(nameElement, scoreElement);
     });
     storage.set('hiscores', this.hiScoreList);
+  }
+
+  setScoreList(scores) {
+    this.hiScoreList = scores;
+    this.redrawScores();
   }
 
   getScoreByName(name) {

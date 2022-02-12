@@ -27,11 +27,12 @@ body {
   display: grid;
   align-items: center;
   justify-items: center;
-  grid-template: 75px 50px 1fr / 1fr;
+  grid-template: 75px 50px 75vmin fr 1fr / 1fr;
   grid-template-areas:
     'title'
     'score'
-    'gs';
+    'gs'
+    'pause';
 }
 
 h1 {
@@ -49,8 +50,8 @@ h1 {
   display: grid;
   border: 1px solid #aaaaaa;
   grid-area: gs;
-  height: 80vmin;
-  width: 80vmin;
+  height: 75vmin;
+  width: 75vmin;
   align-self: start;
   position: relative;
 }
@@ -85,6 +86,11 @@ h1 {
   position: absolute;
   width: 100%;
   height: 100%;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   grid-template: 1fr 2fr 1fr / 1fr 1fr;
   grid-template-areas:
     'up up'
@@ -129,6 +135,12 @@ h1 {
 
 .dpad-right {
   grid-area: right;
+}
+
+.option.pause-button {
+  grid-area: pause;
+  align-self: start;
+  margin-top: 12px;
 }
 
 .overlay {
@@ -205,11 +217,12 @@ h1 {
 
 @media (orientation: portrait) {
   body {
-    grid-template: 50px 25px 1fr / 1fr;
+    grid-template: 50px 25px 86vmin 1fr / 1fr;
     grid-template-areas:
       'title'
       'score'
-      'gs';
+      'gs'
+      'pause';
   }
   h1 {
     font-size: 1.5rem;
@@ -218,8 +231,8 @@ h1 {
     font-size: 0.8rem;
   }
   .game-screen {
-    height: 92vmin;
-    width: 92vmin;
+    height: 86vmin;
+    width: 86vmin;
   }
 }
 /* 

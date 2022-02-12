@@ -7,9 +7,20 @@ class Control {
     this.interval = interval;
     this.state = 0; // 0: idle, 1: running, 2: paused, 3: resumed
     this.enteringName = false;
+    this.nameInput = document.querySelector('.entername-input');
     this.start();
     this.keydownListener();
     this.dpadListener();
+    this.boundResetListener = this.resetListener.bind(this);
+
+    window.addEventListener('keydown', (e) => {
+      if (e.code === ENTER && this.enteringName) {
+        this.submitName(this.nameInput.value);
+      }
+    });
+    document.querySelector('#submit-name').addEventListener('click', () => {
+      this.submitName(this.nameInput.value);
+    });
 
     document
       .querySelector('#resume')
@@ -17,6 +28,9 @@ class Control {
     document
       .querySelector('#restart')
       .addEventListener('click', this.gameReset.bind(this));
+    document
+      .querySelector('#pause')
+      .addEventListener('click', this.gamePause.bind(this));
   }
   // Start the timer that controls snake movement and food spawn
   start() {
@@ -69,7 +83,7 @@ class Control {
     }
 
     if (!this.gameState.isValidMove(pos) && !this.gameState.isPaused) {
-      this.gameState.isGameOver = true;
+      // this.gameState.isGameOver = true;
       this.gameOver();
     }
     if (this.gameState.isValidMove(pos)) {
@@ -118,6 +132,7 @@ class Control {
       }
 
       if (e.code === SPACE) {
+        e.preventDefault;
         if (!this.gameState.isGameOver && !this.gameState.isPaused) {
           this.gamePause();
         } else {
@@ -174,8 +189,9 @@ class Control {
       this.pause();
       scoreBoard.redrawScores();
       this.gameState.isPaused = true;
-      document.querySelector('.overlay').style.display = 'flex';
-      document.querySelector('.overlay-head').innerText = 'PAUSED';
+      document.querySelector('#state-overlay').style.display = 'flex';
+      document.querySelector('#state-overlay .overlay-head').innerText =
+        'PAUSED';
       document.querySelector('#resume').style.display = 'flex';
     }
   }
@@ -183,8 +199,8 @@ class Control {
   gameResume() {
     if (this.state === 2) {
       this.gameState.isPaused = false;
-      document.querySelector('.overlay').style.display = 'none';
-      document.querySelector('.overlay-head').innerText = '';
+      document.querySelector('#state-overlay').style.display = 'none';
+      document.querySelector('#state-overlay .overlay-head').innerText = '';
       document.querySelector('#resume').style.display = 'none';
       this.start();
     }
@@ -192,8 +208,8 @@ class Control {
 
   gameReset() {
     move.setDesired(RIGHT);
-    document.querySelector('.overlay').style.display = 'none';
-    document.querySelector('.overlay-head').innerText = '';
+    document.querySelector('#state-overlay').style.display = 'none';
+    document.querySelector('#state-overlay .overlay-head').innerText = '';
     document.querySelector('#restart').style.display = 'none';
     this.gameState.reset();
     this.start();
@@ -218,34 +234,26 @@ class Control {
     }
   }
 
-  gameOverOverlay() {
-    scoreBoard.redrawScores();
-    document.querySelector('.overlay').style.display = 'flex';
-    document.querySelector('.overlay-head').innerText = 'GAME OVER';
-    document.querySelector('#restart').style.display = 'flex';
+  resetListener(event) {
+    if (event.code === SPACE && this.gameState.isGameOver) {
+      console.log('hello');
+      this.gameReset();
+      window.removeEventListener('keydown', this.resetListener);
+    }
+  }
 
-    window.addEventListener('keydown', (e) => {
-      if (e.code === SPACE && this.gameState.isGameOver) {
-        this.gameReset();
-      }
-    });
+  gameOverOverlay() {
+    this.gameState.isGameOver = true;
+    scoreBoard.redrawScores();
+    document.querySelector('#state-overlay').style.display = 'flex';
+    document.querySelector('#state-overlay .overlay-head').innerText =
+      'GAME OVER';
+    document.querySelector('#restart').style.display = 'flex';
+    window.addEventListener('keydown', this.boundResetListener);
   }
 
   gameOver() {
     this.stop();
-
-    // const gameOverOverlay = () => {
-    //   scoreBoard.redrawScores();
-    //   document.querySelector('.overlay').style.display = 'flex';
-    //   document.querySelector('.overlay-head').innerText = 'GAME OVER';
-    //   document.querySelector('#restart').style.display = 'flex';
-
-    //   window.addEventListener('keydown', (e) => {
-    //     if (e.code === SPACE && this.gameState.isGameOver) {
-    //       this.gameReset();
-    //     }
-    //   });
-    // };
 
     // If there is already a name input OR if not a high score
     if (
@@ -260,35 +268,9 @@ class Control {
       this.gameState.currentName === '' &&
       scoreBoard.isHighScore(this.gameState.score)
     ) {
-      const nameInput = document.querySelector('.entername-input');
-      nameInput.focus();
+      this.nameInput.focus();
       document.querySelector('.entername-container').style.display = 'flex';
       this.enteringName = true;
-
-      window.addEventListener('keydown', (e) => {
-        if (e.code === ENTER && this.enteringName) {
-          this.submitName(nameInput.value);
-        }
-      });
-      document.querySelector('#submit-name').addEventListener('click', () => {
-        this.submitName(nameInput.value);
-      });
-    }
-
-    // If name is already given AND if the score is high enough to meet list.
-    if (
-      this.gameState.currentName !== '' &&
-      scoreBoard.isHighScore(this.gameState.score)
-    ) {
-      if (scoreBoard.hiScoreList.length < 5) {
-        scoreBoard.addScore(this.gameState.currentName, this.gameState.score);
-      } else {
-        scoreBoard.updateScore(
-          this.gameState.currentName,
-          this.gameState.score,
-        );
-      }
-      this.gameOverOverlay();
     }
   }
 }

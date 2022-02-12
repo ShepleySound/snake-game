@@ -3,7 +3,7 @@ class Settings {
   constructor(gameState) {
     this.gameState = gameState;
     this.body = document.querySelector('body');
-    this.theme = storage.get('theme') || 'crimsonGold';
+    this.theme = storage.get('theme') || 'darkMode';
     document
       .querySelector('#settings')
       .addEventListener('click', this.gameSettings.bind(this));

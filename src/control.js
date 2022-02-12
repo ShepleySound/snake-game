@@ -229,14 +229,13 @@ class Control {
         );
       }
       this.gameState.currentName = '';
-      document.querySelector('.entername-container').style.display = 'none';
+      document.querySelector('#entername-overlay').style.display = 'none';
       this.gameOverOverlay();
     }
   }
 
   resetListener(event) {
     if (event.code === SPACE && this.gameState.isGameOver) {
-      console.log('hello');
       this.gameReset();
       window.removeEventListener('keydown', this.resetListener);
     }
@@ -269,7 +268,7 @@ class Control {
       scoreBoard.isHighScore(this.gameState.score)
     ) {
       this.nameInput.focus();
-      document.querySelector('.entername-container').style.display = 'flex';
+      document.querySelector('#entername-overlay').style.display = 'flex';
       this.enteringName = true;
     }
   }

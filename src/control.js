@@ -22,6 +22,10 @@ class Control {
       this.submitName(this.nameInput.value);
     });
 
+    this.nameInput.addEventListener('blur', (e) => {
+      this.nameInput.focus();
+    });
+
     document
       .querySelector('#resume')
       .addEventListener('click', this.gameResume.bind(this));
@@ -271,9 +275,9 @@ class Control {
       this.gameState.currentName === '' &&
       scoreBoard.isHighScore(this.gameState.score)
     ) {
-      this.nameInput.focus();
       document.querySelector('#entername-overlay').style.display = 'flex';
       this.enteringName = true;
+      this.nameInput.focus();
     }
   }
 }

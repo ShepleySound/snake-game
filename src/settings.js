@@ -1,4 +1,5 @@
 import storage from './storage';
+
 class Settings {
   constructor(gameState) {
     this.gameState = gameState;
@@ -21,11 +22,14 @@ class Settings {
     document.querySelector('#state-overlay').style.display = 'none';
     document.querySelector('#settings-overlay').style.display = 'flex';
   }
+
   settingsBack() {
     this.gameState.inSettings = false;
     document.querySelector('#settings-overlay').style.display = 'none';
     document.querySelector('#state-overlay').style.display = 'flex';
   }
+
+  // eslint-disable-next-line class-methods-use-this
   setTheme(theme) {
     document.documentElement.className = theme;
     storage.set('theme', theme);

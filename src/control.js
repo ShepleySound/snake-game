@@ -1,6 +1,7 @@
 import move from './movement';
 import scoreBoard from './scoreboard';
 import { UP, DOWN, LEFT, RIGHT, SPACE, ENTER } from './constants';
+
 class Control {
   constructor(gameState, interval) {
     this.gameState = gameState;
@@ -22,7 +23,7 @@ class Control {
       this.submitName(this.nameInput.value);
     });
 
-    this.nameInput.addEventListener('blur', (e) => {
+    this.nameInput.addEventListener('blur', () => {
       this.nameInput.focus();
     });
 
@@ -36,6 +37,7 @@ class Control {
       .querySelector('#pause')
       .addEventListener('click', this.gamePause.bind(this));
   }
+
   // Start the timer that controls snake movement and food spawn
   start() {
     this.timerId = window.setInterval(() => {
@@ -43,6 +45,7 @@ class Control {
     }, this.gameState.snakeSpeed);
     this.state = 1;
   }
+
   // Clear the timer so that a new interval can be set
   updateSpeed() {
     clearInterval(this.timerId);
@@ -51,9 +54,10 @@ class Control {
     }, this.gameState.snakeSpeed);
     this.gameState.updatingSpeed = false;
   }
+
   //
   pause() {
-    if (this.state != 1 && this.state != 3) return;
+    if (this.state !== 1 && this.state !== 3) return;
 
     clearInterval(this.timerId);
     this.state = 2;
@@ -136,7 +140,7 @@ class Control {
       }
 
       if (e.code === SPACE) {
-        e.preventDefault;
+        e.preventDefault();
         if (!this.gameState.isGameOver && !this.gameState.isPaused) {
           this.gamePause();
         } else if (!this.gameState.inSettings) {

@@ -1,5 +1,6 @@
 class move {
   static desiredDirection = 'right';
+
   static direction = 'right';
 
   static up(pos) {

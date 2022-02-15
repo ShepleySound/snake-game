@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import './style.css';
 import './themes.css';
 import grid from './grid';

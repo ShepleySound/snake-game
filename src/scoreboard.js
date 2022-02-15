@@ -37,10 +37,11 @@ class ScoreBoard {
       return score < checkScore;
     });
     if (replaceIndex >= 0) {
-      this.hiScoreList.splice(replaceIndex, 1, {
+      this.hiScoreList.splice(replaceIndex, 0, {
         name: name,
         score: checkScore,
       });
+      this.hiScoreList.pop();
     }
   }
 

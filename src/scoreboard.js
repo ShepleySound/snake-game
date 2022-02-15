@@ -14,7 +14,7 @@ class ScoreBoard {
   // Add score object to array, THEN redraw
 
   addScore(name, score) {
-    this.hiScoreList.push({ name: name, score: score });
+    this.hiScoreList.push({ name, score });
   }
 
   isHighScore(checkScore) {
@@ -22,9 +22,9 @@ class ScoreBoard {
     if (this.hiScoreList.length < 5) {
       return true;
     }
-    const checkList = this.hiScoreList.findIndex(({ score }) => {
-      return score < checkScore;
-    });
+    const checkList = this.hiScoreList.findIndex(
+      ({ score }) => score < checkScore,
+    );
     if (checkList >= 0) {
       return true;
     }
@@ -33,12 +33,12 @@ class ScoreBoard {
 
   updateScore(name, checkScore) {
     this.sortScores();
-    const replaceIndex = this.hiScoreList.findIndex(({ score }) => {
-      return score < checkScore;
-    });
+    const replaceIndex = this.hiScoreList.findIndex(
+      ({ score }) => score < checkScore,
+    );
     if (replaceIndex >= 0) {
       this.hiScoreList.splice(replaceIndex, 0, {
-        name: name,
+        name,
         score: checkScore,
       });
       this.hiScoreList.pop();
@@ -46,9 +46,7 @@ class ScoreBoard {
   }
 
   sortScores() {
-    this.hiScoreList.sort((a, b) => {
-      return b.score - a.score;
-    });
+    this.hiScoreList.sort((a, b) => b.score - a.score);
   }
 
   redrawScores() {
@@ -67,31 +65,17 @@ class ScoreBoard {
     storage.set('hiscores', this.hiScoreList);
   }
 
+  getScoreList() {
+    return this.hiScoreList;
+  }
+
   setScoreList(scores) {
     this.hiScoreList = scores;
     this.redrawScores();
   }
 
   getScoreByName(name) {
-    const hiScoreList = this.getCurrentHiscores();
-    const result = hiScoreList.filter((entry) => {
-      return entry.name === name;
-    });
-    return result;
-  }
-
-  getCurrentHiscores() {
-    const nameList = document.querySelectorAll('.hiscore-name');
-    const scoreList = document.querySelectorAll('.hiscore-score');
-
-    const hiscoreList = [];
-    nameList.forEach((player, index) => {
-      hiscoreList.push({
-        name: player.innerText,
-        score: parseInt(scoreList[index].dataset.score),
-      });
-    });
-    return hiscoreList;
+    return this.hiScoreList.filter((entry) => entry.name === name);
   }
 }
 
